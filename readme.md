@@ -47,6 +47,10 @@ Lakukan **validasi** email pada form komentar dengan menggunakan javascript. Kom
 
 Pembuatan blog ini tidak boleh menggunakan framework PHP dan javascript.
 
+## Deliverable
+
+Masing-masing orang lakukan Fork pada repo ini. Jika sudah selesai tambahkan pull request ke repo ini.
+
 ## Lisensi
 
 &copy; 2014 Asisten IF3110
