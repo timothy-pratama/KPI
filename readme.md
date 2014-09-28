@@ -2,6 +2,8 @@
 
 Tugas 1 IF3110.
 
+![Simple Blog](http://i655.photobucket.com/albums/uu275/sonnylazuardi/ss-5.jpg)
+
 ## Deskripsi
 
 Gunakan template ini untuk membuat sebuah blog sederhana dengan menggunakan bahasa pemrograman PHP.
