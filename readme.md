@@ -8,19 +8,19 @@ Gunakan template ini untuk membuat sebuah blog sederhana dengan menggunakan baha
 
 ## Spesifikasi
 
-1. List Post
+### List Post
 
 List Post merupakan halaman awal blog yang berisi daftar post yang sudah pernah dibuat. Setiap item pada list post mengandung `Judul`, `Tanggal`, `Konten`. Terdapat juga menu untuk mengedit dan menghapus item post tersebut.
 
-2. Add Post
+### Add Post
 
 Add Post merupakan halaman untuk menambahkan post baru.  Post baru memiliki form untuk mengisi `Judul`, `Tanggal`, dan `Konten`. Lakukan **validasi** untuk tanggal dengan javascript agar tanggal yang dimasukkan lebih besar atau sama dengan tanggal saat menambahkan post baru tersebut.
 
-3. Edit Post
+### Edit Post
 
 Mengedit post yang sudah pernah dibuat. Form yang ditampilkan sama seperti saat menambahkan form baru.
 
-4. Delete Post
+### Delete Post
 
 Menghapus post yang sudah pernah dibuat. Lakukan **konfimasi** dengan javascript untuk konfirmasi pengguna terhadap penghapusan post tersebut. Keluarkan konfirmasi berisi pesan berikut
 
@@ -28,11 +28,11 @@ Menghapus post yang sudah pernah dibuat. Lakukan **konfimasi** dengan javascript
 
 Jika pengguna memilih `yes` maka post terhapus, jika tidak maka post tidak jadi dihapus.
 
-5. View Post
+### View Post
 
 Halaman View Post merupakan halaman untuk melihat suatu post. Pada halaman ini terdapat informasi `Judul`, `Tanggal`, dan `Konten`, serta **Komentar** (spesifikasi di bawah).
 
-6. Komentar
+### Komentar
 
 Komentar berisi daftar komentar yang ditulis untuk post tertentu. Form komentar terdiri dari `Nama`, `Email`, dan `Komentar`, simpan juga tanggal dibuatnya komentar tersebut. Setiap item pada list komentar berisi `Nama`, `Tanggal`, `Komentar`.
 
