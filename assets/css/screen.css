@@ -225,7 +225,7 @@ div.cover > img {
 }
 /* Header */
 .art-header {
-  height: 900px;
+  height: 700px;
   /* Background image is defined in the post */
   background-position: top center;
   background-attachment: fixed;
@@ -233,7 +233,7 @@ div.cover > img {
 }
 /* Contains the time, title and subtitle for an article */
 .art-header-inner {
-  position: fixed;
+  position: absolute;
   top: 300px;
   left: 50%;
   margin-left: -490px;
@@ -254,6 +254,7 @@ div.cover > img {
   line-height: .9;
   letter-spacing: -2px;
   width: 100%;
+  margin-top: 30px;
 }
 .art-subtitle {
   margin-top: 4px;
@@ -840,7 +841,7 @@ hr.featured-article:after {
 }
 
 #contact-area textarea {
-  height: 90px;
+  height: 500px;
 }
 
 #contact-area textarea:focus, #contact-area input:focus {
