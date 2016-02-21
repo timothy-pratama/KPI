@@ -24,20 +24,20 @@
 			<div class="box-header">
 				<h2>Log In</h2>
 			</div>
-			<form action="processLogin.php">
+			<form action="processLogin.php" method="post">
 				<label for="username">Username</label>
 				<br/>
-				<input type="text" id="username"  required>
+				<input type="text" id="username" name="username" required>
 				<br/>
 				<label for="password">Password</label>
 				<br/>
-				<input type="password" id="password"  required>
+				<input type="password" id="password" name="password" required>
 				<br/>
 				<button type="submit">Sign In</button>
 				<br/>
 				<br/>
 				<label for="rememberMe">
-					<input type="checkbox" value="rememberMe"> Remember Me
+					<input type="checkbox" value="remember" name="remember"> Remember Me
 				</label>
 				<br/>
 				<p>Don't have account yet? <a href="#"><b>Sign Up</b></a></p>
