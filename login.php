@@ -10,7 +10,7 @@
 
 	<link rel="stylesheet" href="assets/css/animate.css">
 	<!-- Custom Stylesheet -->
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/styleLogin.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
@@ -40,7 +40,7 @@
 					<input type="checkbox" value="remember" name="remember"> Remember Me
 				</label>
 				<br/>
-				<p>Don't have account yet? <a href="#"><b>Sign Up</b></a></p>
+				<p>Don't have account yet? <a href="registerForm.php"><b>Sign Up</b></a></p>
 			</form>
 		</div>
 	</div>
