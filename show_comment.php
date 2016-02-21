@@ -12,7 +12,7 @@
 
 	$id=$_GET['ID'];
 
-	$query="SELECT * FROM `comment` WHERE id=$id";
+	$query="SELECT * FROM `comment` WHERE posting_id=$id";
 	$results=mysqli_query($connection,$query);
 
 	while($result=mysqli_fetch_assoc($results)){
