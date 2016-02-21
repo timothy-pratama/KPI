@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,39 +69,20 @@
                       <input type='hidden' id='postId' value='".$result['id']."'/a>
                       <h2 class='art-list-title'><a href='view_post.php?ID=".$result['id']."'>".$result['judul']."</a></h2>
                       <div class='art-list-time'>".$result['tanggal']."</div>
-                      <div class='art-list-time'><span style='color:#F40034;'>&#10029;</span> Featured</div>
+                      <div class='art-list-time'>".$result['author']."</div>
+                      <div class=\"art-list-time\">
+                          <img src=\"".$result['gambar']."\"style=\"width: 100%;\">
+                      </div>
                   </div>
                   <p>".$result['konten']."</p>
-                  <p>
+                  <p style='margin-left: 35%;'>
                     <a href='edit.php?ID=".$result['id']."'>Edit</a> | <a href='#' onclick='ConfirmDelete(".$result['id'].")'>Hapus</a>
                   </p>
                 </li>
                 ";
               }
-              
             ?>
-            <li class="art-list-item">
-                <div class="art-list-item-title-and-time">
-                    <h2 class="art-list-title"><a href="post.html">Apa itu Simple Blog?</a></h2>
-                    <div class="art-list-time">15 Juli 2014</div>
-                    <div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis repudiandae quae natus quos alias eos repellendus a obcaecati cupiditate similique quibusdam, atque omnis illum, minus ex dolorem facilis tempora deserunt! &hellip;</p>
-                <p>
-                  <a href="#">Edit</a> | <a href="#">Hapus</a>
-                </p>
-            </li>
 
-            <li class="art-list-item">
-                <div class="art-list-item-title-and-time">
-                    <h2 class="art-list-title"><a href="post.html">Siapa dibalik Simple Blog?</a></h2>
-                    <div class="art-list-time">11 Juli 2014</div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis repudiandae quae natus quos alias eos repellendus a obcaecati cupiditate similique quibusdam, atque omnis illum, minus ex dolorem facilis tempora deserunt! &hellip;</p>
-                <p>
-                  <a href="#">Edit</a> | <a href="#">Hapus</a>
-                </p>
-            </li>
           </ul>
         </nav>
     </div>

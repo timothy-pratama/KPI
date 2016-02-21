@@ -51,7 +51,7 @@ h1 {
 
 h2 {
   font-size: 45px;
-  padding-bottom: 25px;
+  padding-bottom: 5px;
 }
 
 h3 {
@@ -401,6 +401,7 @@ div.cover > img {
   font-size: 26px;
   line-height: 26px;
   font-weight: 700;
+  text-align: center;
 }
 .art-list-item-title-and-time {
   float: left;
@@ -412,6 +413,7 @@ div.cover > img {
   line-height: 20px;
   letter-spacing: 2px;
   text-transform: uppercase;
+  text-align: center;
   color: #999;
 }
 .art-list-title a {
@@ -427,6 +429,7 @@ div.cover > img {
   margin-bottom: 0;
   font-size: 16px;
   line-height: 24px;
+  text-align: justify;
 }
 
 
