@@ -1,4 +1,9 @@
-
+<?php
+if(!isset($_SESSION['login']))
+{
+    header("location: login.php");
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -51,6 +56,7 @@
         <nav class="art-list">
           <ul class="art-list-body">
             <?php
+              include ("script/tanggal_indonesia.php");
               $dbhost="localhost";
               $dbuser="root";
               $dbpass="";
@@ -68,7 +74,7 @@
                   <div class='art-list-item-title-and-time'>
                       <input type='hidden' id='postId' value='".$result['id']."'/a>
                       <h2 class='art-list-title'><a href='view_post.php?ID=".$result['id']."'>".$result['judul']."</a></h2>
-                      <div class='art-list-time'>".$result['tanggal']."</div>
+                      <div class='art-list-time'>".tanggalIndonesia($result['tanggal'])."</div>
                       <div class='art-list-time'>".$result['author']."</div>
                       <div class=\"art-list-time\">
                           <img src=\"".$result['gambar']."\"style=\"width: 100%;\">
