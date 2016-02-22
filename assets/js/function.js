@@ -88,7 +88,7 @@ function validatePassword()
 				}
 				else
 				{
-					alert('username: ' + username + ' has been used');
+					alert('username has been used');
 				}
 			}
 		};

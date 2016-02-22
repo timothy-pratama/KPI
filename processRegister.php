@@ -37,5 +37,4 @@
     {
         echo 'fail';
     }
-    $_SESSION['test'] = 'test';
 ?>
