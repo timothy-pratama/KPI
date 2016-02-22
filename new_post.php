@@ -56,15 +56,13 @@
                 <form id="formPost" method="post" action="processPost.php">
                     <label for="Judul">Judul:</label>
                     <input type="text" name="Judul" id="Judul">
-
                     <label for="Tanggal">Tanggal:</label>
-                    <select id="daydropdown" name="daydropdown">
-                    </select> 
-                    <select id="monthdropdown" name="monthdropdown">
-                    </select> 
-                    <select id="yeardropdown" name="yeardropdown">
-                    </select> 
+                    <select id="daydropdown" name="daydropdown"></select>
+                    <select id="monthdropdown" name="monthdropdown"></select>
+                    <select id="yeardropdown" name="yeardropdown"></select>
                     <br><br>
+                    <label for="gambar">Gambar:</label>
+                    <input type="file" accept="image/*" name="gambar" id="gambar">
                     <label for="Konten">Konten:</label><br>
                     <textarea name="Konten" rows="20" cols="20" id="Konten"></textarea>
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
