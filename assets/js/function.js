@@ -119,7 +119,6 @@ function doLogin()
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
 			var responseText = xhttp.responseText;
-			console.log(responseText);
 			if(responseText === 'ok')
 			{
 				window.location = 'index.php';

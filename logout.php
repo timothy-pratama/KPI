@@ -4,7 +4,6 @@
     unset($_SESSION['login']);
     session_destroy();
     session_start();
-    deleteCookie('seriesIdentifier');
-    deleteCookie('token');
+    deleteCookie('rememberToken');
     header('location: login.php');
 ?>

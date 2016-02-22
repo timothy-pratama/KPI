@@ -46,9 +46,16 @@
         $user_id = $user['id'];
         if(password_verify($password, $hashed_password))
         {
-            if($remember)
+            if($remember === 'true')
             {
-                
+                $rememberToken = uniqid();
+                $rememberToken = password_hash($rememberToken, PASSWORD_DEFAULT);
+
+                $query = $connection->prepare("UPDATE user SET rememberToken = ? WHERE id = ?");
+                $query->bind_param('si',$rememberToken, $user_id);
+                $query->execute();
+
+                addCookie("rememberToken", $rememberToken);
             }
             echo 'ok';
 
