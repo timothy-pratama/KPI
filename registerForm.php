@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +28,7 @@
         <div class="box-header">
             <h2>Register</h2>
         </div>
-        <form action="processLogin.php" method="post">
+        <form action="processRegister.php" method="post" onsubmit="return false;">
             <label for="username">Username</label>
             <br/>
             <input type="text" id="username" name="username" required>
@@ -33,12 +37,18 @@
             <br/>
             <input type="password" id="password" name="password" required>
             <br/>
-            <button type="submit">Register</button>
+            <label for="confirmPassword">Confirm Password</label>
+            <br/>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <br/>
+            <button type="submit" onclick="validatePassword()">Register</button>
             <br/>
         </form>
     </div>
 </div>
 </body>
+
+<script type="text/javascript" src="assets/js/function.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -58,5 +68,4 @@
         $('label[for="password"]').removeClass('selected');
     });
 </script>
-
 </html>

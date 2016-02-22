@@ -69,3 +69,36 @@ window.onload=function(){
 	validate_new_post();
 	populatedropdown("daydropdown", "monthdropdown", "yeardropdown");
 }
+
+function validatePassword()
+{
+	var username = document.getElementById('username').value;
+	var password = document.getElementById('password').value;
+	var confirmPassword = document.getElementById('confirmPassword').value;
+	if(password === confirmPassword)
+	{
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				var responseText = xhttp.responseText;
+				if(responseText === "ok")
+				{
+					alert('register successful');
+					window.location="login.php"
+				}
+				else
+				{
+					alert('username: ' + username + ' has been used');
+				}
+			}
+		};
+		xhttp.open("POST", "processRegister.php?", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("username="+username+"&password="+password);
+	}
+	else
+	{
+		alert('password and confirm password are different!');
+		return false;
+	}
+}
