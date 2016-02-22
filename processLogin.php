@@ -49,7 +49,7 @@
             if($remember === 'true')
             {
                 $rememberToken = uniqid();
-                $rememberToken = password_hash($rememberToken, PASSWORD_DEFAULT);
+                $rememberToken = hash('md5',$rememberToken);
 
                 $query = $connection->prepare("UPDATE user SET rememberToken = ? WHERE id = ?");
                 $query->bind_param('si',$rememberToken, $user_id);

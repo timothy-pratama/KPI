@@ -3,6 +3,11 @@
 
 	$csrf_token = uniqid();
 	$_SESSION['csrf_token'] = $csrf_token;
+
+	if(isset($_COOKIE['rememberToken']))
+	{
+		header('location: processCookieLogin.php');
+	}
 ?>
 
 <!DOCTYPE html>
