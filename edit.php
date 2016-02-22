@@ -44,9 +44,12 @@
             die("Koneksi ke Database gagal : ".mysqli_connect_errno()
                 ." (". mysqli_connect_errno()." )");
         }
-        $id=$_GET['ID'];
-        $query="SELECT * FROM posting WHERE id=$id";
-        $result=mysqli_query($connection,$query);
+        $posting_id=htmlspecialchars($_GET['ID']);
+        $query="SELECT * FROM posting WHERE id=$posting_id";
+        $query = $connection->prepare("SELECT * FROM posting WHERE id = ?");
+        $query->bind_param('i', $posting_id);
+        $query->execute();
+        $result=$query->get_result();
         if($result) $row=mysqli_fetch_assoc($result);
         else echo 'query gagal';
     ?>
@@ -64,12 +67,12 @@
     
     <h2 class="art-title" style="margin-bottom:40px">-</h2>
 
-    <div class="art-body">
+    <div class="art-body" style="top: 35px;">
         <div class="art-body-inner">
             <h2>Edit POST</h2>
 
             <div id="contact-area">
-                <form id="formPost" method="post" action="processEdit.php?ID=<?php echo $id ?>">
+                <form id="formPost" method="post" action="processEdit.php?ID=<?php echo $posting_id ?>">
                     <label for="Judul">Judul: </label>
                     <input type="text" name="Judul" id="Judul" value="<?php echo $row['judul'] ?>">
 
@@ -81,6 +84,8 @@
                     <select id="yeardropdown" name="yeardropdown">
                     </select> 
                     <br><br>
+                    <label for="gambar">Gambar:</label>
+                    <input type="file" accept="image/*" id="gambar" name="gambar" required>
                     <label for="Konten">Konten:</label><br>
                     <textarea name="Konten" rows="20" cols="20" id="Konten"><?php echo $row['konten'] ?></textarea>
                     <input type="submit" name="submit" value="Simpan" class="submit-button">

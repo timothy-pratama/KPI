@@ -90,6 +90,8 @@ if(!isset($_SESSION['login']))
                 </li>
                 ";
               }
+
+            $connection->close();
             ?>
 
           </ul>

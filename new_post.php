@@ -39,6 +39,7 @@
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+        <li><a href="logout.php">Logout</a></li>
         <li><a href="new_post.php">+ Tambah Post</a></li>
     </ul>
 </nav>
@@ -48,7 +49,7 @@
     
     <h2 class="art-title" style="margin-bottom:40px">-</h2>
 
-    <div class="art-body">
+    <div class="art-body" style="top: 40px;">
         <div class="art-body-inner">
             <h2>Tambah Post</h2>
 

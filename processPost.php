@@ -25,21 +25,21 @@
 			." (". mysqli_connect_errno()." )");
 	}
 	if(isset($_POST["submit"])){
-		$judul=$_POST["Judul"];
-		$hari=$_POST["daydropdown"];
-		$bulan=$_POST["monthdropdown"];
+		$judul= htmlspecialchars($_POST["Judul"]);
+		$hari= htmlspecialchars($_POST["daydropdown"]);
+		$bulan= htmlspecialchars($_POST["monthdropdown"]);
 		$bulan=convertmonth($bulan);
-		$tahun=$_POST["yeardropdown"];
-		$konten=$_POST["Konten"];
+		$tahun= htmlspecialchars($_POST["yeardropdown"]);
+		$konten= htmlspecialchars($_POST["Konten"]);
 		$tanggal = $tahun."-".$bulan."-".$hari;
+		$author = $_SESSION['login']['username'];
+		$gambar = htmlspecialchars($_POST['gambar']);
+
 		echo $tanggal;
 		if(isset($judul) && isset($tanggal) && isset($konten)){
-			$query="INSERT INTO posting (" ;
-			$query.=" tanggal,judul,konten";
-			$query.=") VALUES (";
-			$query.="'{$tanggal}','{$judul}','{$konten}'";
-			$query.=")";
-			$result=mysqli_query($connection,$query);
+			$query = $connection->prepare("INSERT INTO posting (judul, tanggal, konten, author, gambar) VALUES (?,?,?,?,?)");
+			$query->bind_param('sssss',$judul, $tanggal, $konten, $author, $gambar);
+			$result = $query->execute();
 			if($result){
 				echo "berhasil";
 			}

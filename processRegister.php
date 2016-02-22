@@ -38,6 +38,8 @@
         $insertQuery = $connection->prepare("INSERT INTO user (username, password) VALUES (?, ?)");
         $insertQuery->bind_param('ss', $username, $hashedPassword);
         $insertQuery->execute();
+
+        $connection->close();
         echo 'ok';
     }
     else

@@ -56,6 +56,8 @@
                 $query->execute();
 
                 addCookie("rememberToken", $rememberToken);
+
+                $connection->close();
             }
             echo 'ok';
 

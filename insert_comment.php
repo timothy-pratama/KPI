@@ -1,4 +1,7 @@
  <?php
+	session_start();
+
+ 	include ('script/tanggal_indonesia.php');
 
 	$dbhost="localhost";
     $dbuser="root";
@@ -10,12 +13,15 @@
 			." (". mysqli_connect_errno()." )");
 	}
 
-	$id = $_GET['ID'];
-	$nama = $_GET['nama'];
-	$komentar = $_GET['komentar'];
+	$posting_id = htmlspecialchars($_GET['ID']);
+	$nama = htmlspecialchars($_GET['nama']);
+	$komentar = htmlspecialchars($_GET['komentar']);
+	$tanggal = date('Y-m-d H:i:s');
 
-	$query="INSERT INTO `comment` (id, nama, komentar) VALUES ('{$id}', '{$nama}', '{$komentar}')";
-	$hasil=mysqli_query($connection,$query);
+ 	$query = $connection->prepare("INSERT INTO comment (posting_id, nama, komentar, tanggal) VALUES (?,?,?,?)");
+ 	$query->bind_param('isss',$posting_id,$nama,$komentar, $tanggal);
+
+ $hasil = $query->execute();
 	if($hasil){
 	
 	}
@@ -23,14 +29,17 @@
 		die("Database query failed");
 	}
 
-	$query2="SELECT * FROM `comment` WHERE id=$id";
-	$results=mysqli_query($connection,$query2);
+ 	$query2 = $connection->prepare("SELECT * FROM comment WHERE id = ?");
+ 	$query2->bind_param('i', $posting_id);
+ 	$query2->execute();
+
+	$results=$query2->get_result();
 	while($result=mysqli_fetch_assoc($results)){
 		echo "
 			<li class='art-list-item'>
                 <div class='art-list-item-title-and-time'>
                     <h2 class='art-list-title'><a href='#'>".$result['nama']."</a></h2>
-                    <div class='art-list-time'>2 menit lalu</div>
+                    <div class='art-list-time'>".tanggalIndonesia($result['tanggal'])."</div>
                 </div>
                 <p>".$result['komentar']."</p>
 		";

@@ -42,6 +42,7 @@
         $query->bind_param('si', $hashed_token, $user_id);
         $query->execute();
 
+        $connection->close();
         addCookie('rememberToken', $hashed_token);
         header('location: index.php');
     }

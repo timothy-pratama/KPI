@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +37,7 @@
 
 <body class="default" onload="show_comment(<?php echo $_GET['ID']?>)">
     <?php
+        include ('script/tanggal_indonesia.php');
         $dbhost="localhost";
         $dbuser="root";
         $dbpass="";
@@ -45,9 +47,11 @@
           die("Koneksi ke Database gagal : ".mysqli_connect_errno()
           ." (". mysqli_connect_errno()." )");
         }
-        $id=$_GET['ID'];
-        $query="SELECT * FROM `posting` WHERE id=$id";
-        $results=mysqli_query($connection,$query);
+        $id=htmlspecialchars($_GET['ID']);
+        $query = $connection->prepare("SELECT * FROM posting WHERE id = ?");
+        $query->bind_param('i', $id);
+        $query->execute();
+        $results=$query->get_result();
         if($results) $result=mysqli_fetch_assoc($results);
         else{
             echo "QUERY FAILED";
@@ -66,7 +70,7 @@
     
     <header class="art-header">
         <div class="art-header-inner" style="margin-top: 0px; opacity: 1;">
-            <time class="art-time"><?php echo $result['tanggal']?></time>
+            <time class="art-time"><?php echo tanggalIndonesia($result['tanggal'])?></time>
             <h2 class="art-title"><?php echo $result['judul']?></h2>
             <p class="art-subtitle"></p>
         </div>
@@ -74,8 +78,11 @@
 
     <div class="art-body">
         <div class="art-body-inner">
-            <hr class="featured-article" />
-            <p><?php echo $result['konten']?></p>
+            <h3 style="text-align: center;"> <?php echo $result['author'] ?> </h3>
+
+            <img src="<?php echo $result['gambar'] ?>" style="width: 100%" />
+
+            <p style="text-align: justify"><?php echo $result['konten']?></p>
             <hr />
             
             <h2>Komentar</h2>

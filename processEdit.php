@@ -25,19 +25,19 @@
 			." (". mysqli_connect_errno()." )");
 	}
 	if(isset($_POST["submit"])){
-		$judul=$_POST["Judul"];
-		$hari=$_POST["daydropdown"];
-		$bulan=$_POST["monthdropdown"];
+		$judul=htmlspecialchars($_POST["Judul"]);
+		$hari=htmlspecialchars($_POST["daydropdown"]);
+		$bulan=htmlspecialchars($_POST["monthdropdown"]);
 		$bulan=convertmonth($bulan);
-		$tahun=$_POST["yeardropdown"];
-		$konten=$_POST["Konten"];
+		$tahun=htmlspecialchars($_POST["yeardropdown"]);
+		$konten=htmlspecialchars($_POST["Konten"]);
 		$tanggal = $tahun."-".$bulan."-".$hari;
-		$id=$_GET['ID'];
+		$posting_id=htmlspecialchars($_GET['ID']);
+		$gambar = htmlspecialchars($_POST['gambar']);
 		if(isset($judul) && isset($tanggal) && isset($konten)){
-			$query="UPDATE posting SET";
-			$query.=" tanggal='$tanggal', judul='$judul', konten='$konten'";
-			$query.=" WHERE id='$id'";
-			$result=mysqli_query($connection,$query);
+			$query = $connection->prepare("UPDATE posting SET tanggal = ?, judul = ?, konten = ?, gambar = ? WHERE id = ?");
+			$query->bind_param('ssssi',$tanggal,$judul, $konten, $gambar, $posting_id);
+			$result = $query->execute();
 			if($result){
 				echo "berhasil";
 			}
