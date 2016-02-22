@@ -1,5 +1,8 @@
 <?php
     session_start();
+
+    $csrf_token = uniqid();
+    $_SESSION['csrf_token'] = $csrf_token;
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +31,7 @@
         <div class="box-header">
             <h2>Register</h2>
         </div>
-        <form action="processRegister.php" method="post" onsubmit="return false;">
+        <form method="post" onsubmit="return false;">
             <label for="username">Username</label>
             <br/>
             <input type="text" id="username" name="username" required>
@@ -41,8 +44,9 @@
             <br/>
             <input type="password" id="confirmPassword" name="confirmPassword" required>
             <br/>
-            <button type="submit" onclick="validatePassword()">Register</button>
+            <button type="submit" onclick="validatePasswordAndRegister()">Register</button>
             <br/>
+            <input type="hidden" id="csrftoken" name="csrftoken" value="<?php echo $csrf_token?>">
         </form>
     </div>
 </div>

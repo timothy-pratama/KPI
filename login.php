@@ -1,5 +1,8 @@
 <?php
 	session_start();
+
+	$csrf_token = uniqid();
+	$_SESSION['csrf_token'] = $csrf_token;
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +31,7 @@
 			<div class="box-header">
 				<h2>Log In</h2>
 			</div>
-			<form action="processLogin.php" method="post">
+			<form method="post" onsubmit="return false;">
 				<label for="username">Username</label>
 				<br/>
 				<input type="text" id="username" name="username" required>
@@ -37,18 +40,21 @@
 				<br/>
 				<input type="password" id="password" name="password" required>
 				<br/>
-				<button type="submit">Sign In</button>
+				<button type="submit" onclick="doLogin()">Sign In</button>
 				<br/>
 				<br/>
 				<label for="rememberMe">
-					<input type="checkbox" value="remember" name="remember"> Remember Me
+					<input id="rememberMe" type="checkbox" value="remember" name="remember"> Remember Me
 				</label>
 				<br/>
 				<p>Don't have account yet? <a href="registerForm.php"><b>Sign Up</b></a></p>
+				<input type="hidden" id="csrf_token" value="<?php echo $csrf_token ?>">
 			</form>
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript" src="assets/js/function.js"></script>
 
 <script>
 	$(document).ready(function () {

@@ -3,7 +3,14 @@
 
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
+    $csrf_token = htmlspecialchars($_POST['csrf_token']);
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    if($csrf_token != $_SESSION['csrf_token'])
+    {
+        echo('csrf_token mismatch');
+        exit();
+    }
 
     // MySQL config
     $dbhost = 'localhost';
@@ -28,9 +35,9 @@
 
     if($result->num_rows === 0)
     {
-        $insertQuery = "INSERT INTO user (username, password) VALUES ('".$username."', '".$hashedPassword."')";
-        $result = $connection->query($insertQuery);
-
+        $insertQuery = $connection->prepare("INSERT INTO user (username, password) VALUES (?, ?)");
+        $insertQuery->bind_param('ss', $username, $hashedPassword);
+        $insertQuery->execute();
         echo 'ok';
     }
     else

@@ -70,11 +70,12 @@ window.onload=function(){
 	populatedropdown("daydropdown", "monthdropdown", "yeardropdown");
 }
 
-function validatePassword()
+function validatePasswordAndRegister()
 {
 	var username = document.getElementById('username').value;
 	var password = document.getElementById('password').value;
 	var confirmPassword = document.getElementById('confirmPassword').value;
+	var csrf_token = document.getElementById('csrftoken').value;
 	if(password === confirmPassword)
 	{
 		var xhttp = new XMLHttpRequest();
@@ -86,19 +87,55 @@ function validatePassword()
 					alert('register successful');
 					window.location="login.php"
 				}
-				else
+				else if(responseText === "fail")
 				{
 					alert('username has been used');
+				}
+				else
+				{
+					alert('csrf_token mismatch.');
 				}
 			}
 		};
 		xhttp.open("POST", "processRegister.php?", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("username="+username+"&password="+password);
+		xhttp.send("username="+username+"&password="+password+"&csrf_token="+csrf_token);
 	}
 	else
 	{
 		alert('password and confirm password are different!');
 		return false;
 	}
+}
+
+function doLogin()
+{
+	var username = document.getElementById('username').value;
+	var password = document.getElementById('password').value;
+	var remember = document.getElementById('rememberMe').checked;
+	var csrf_token = document.getElementById('csrf_token').value;
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			var responseText = xhttp.responseText;
+			console.log(responseText);
+			if(responseText === 'ok')
+			{
+				window.location = 'index.php';
+			}
+			else if(responseText === 'csrf_token_mismatch')
+			{
+				alert('csrf token mismatch!');
+			}
+			else
+			{
+				alert('incorrect username / password!');
+			}
+		}
+	};
+
+	xhttp.open("POST", "processLogin.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("username="+username+"&password="+password+"&rememberMe="+remember+"&csrf_token="+csrf_token);
 }

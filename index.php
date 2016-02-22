@@ -3,7 +3,10 @@ session_start();
 if(!isset($_SESSION['login']))
 {
     header("location: login.php");
+} else {
+
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,7 @@ if(!isset($_SESSION['login']))
 <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
 <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 
 <title>Simple Blog</title>
@@ -49,6 +52,7 @@ if(!isset($_SESSION['login']))
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
         <li><a href="new_post.php">+ Tambah Post</a></li>
+        <li><a href="logout.php">Logout</a></li>
     </ul>
 </nav>
 
@@ -103,9 +107,9 @@ if(!isset($_SESSION['login']))
         Asisten IF3110 /
         <a class="rss-link" href="#rss">RSS</a> /
         <br>
-        <a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-        <a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-        <a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
+        <a class="twitter-link" href="https://twitter.com/YoGiiSinaga">Yogi</a> /
+        <a class="twitter-link" href="https://twitter.com/sonnylazuardi">Sonny</a> /
+        <a class="twitter-link" href="https://twitter.com/fathanpranaya">Fathan</a> /
         <br>
         <a class="twitter-link" href="#">Renusa</a> /
         <a class="twitter-link" href="#">Kelvin</a> /
