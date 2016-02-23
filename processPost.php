@@ -1,4 +1,6 @@
 <?php
+	session_start();
+
 	function convertmonth($month){
 		if($month=="Jan")return 1;
 		else if($month=="Feb")return 2;
