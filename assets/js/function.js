@@ -19,7 +19,6 @@ function validate_date(){
 		var tanggal_sekarang=new Date();
 		if(tanggal_input<tanggal_sekarang) return false;
 		else return true;
-
 }
 
 function validate_new_post(){
@@ -76,6 +75,7 @@ function validatePasswordAndRegister()
 	var password = document.getElementById('password').value;
 	var confirmPassword = document.getElementById('confirmPassword').value;
 	var csrf_token = document.getElementById('csrftoken').value;
+    var hashed_password = Sha256.hash(password);
 	if(password === confirmPassword)
 	{
 		var xhttp = new XMLHttpRequest();
@@ -99,7 +99,7 @@ function validatePasswordAndRegister()
 		};
 		xhttp.open("POST", "processRegister.php?", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("username="+username+"&password="+password+"&csrf_token="+csrf_token);
+		xhttp.send("username="+username+"&password="+hashed_password+"&csrf_token="+csrf_token);
 	}
 	else
 	{

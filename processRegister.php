@@ -4,7 +4,6 @@
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $csrf_token = htmlspecialchars($_POST['csrf_token']);
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     if($csrf_token != $_SESSION['csrf_token'])
     {
@@ -36,11 +35,13 @@
     if($result->num_rows === 0)
     {
         $insertQuery = $connection->prepare("INSERT INTO user (username, password) VALUES (?, ?)");
-        $insertQuery->bind_param('ss', $username, $hashedPassword);
+        $insertQuery->bind_param('ss', $username, $password);
         $insertQuery->execute();
 
         $connection->close();
         echo 'ok';
+
+        $_SESSION['csrf_token'] = uniqid();
     }
     else
     {
