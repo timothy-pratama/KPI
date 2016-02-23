@@ -41,7 +41,7 @@
         $connection->close();
         echo 'ok';
 
-        $_SESSION['csrf_token'] = uniqid();
+        $_SESSION['csrf_token'] = hash('sha256',uniqid());
     }
     else
     {

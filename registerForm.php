@@ -1,11 +1,8 @@
 <?php
     session_start();
 
-    $csrf_token = uniqid();
+    $csrf_token = hash('sha256',uniqid());
     $_SESSION['csrf_token'] = $csrf_token;
-
-    $base_salt = uniqid();
-    $_SESSION['base_salt'] = $base_salt;
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +48,6 @@
             <button type="submit" onclick="validatePasswordAndRegister()">Register</button>
             <br/>
             <input type="hidden" id="csrftoken" name="csrftoken" value="<?php echo $csrf_token?>">
-            <input type="hidden" id="baseSalt" name="baseSalt" value="<?php echo $base_salt ?>"
         </form>
     </div>
 </div>

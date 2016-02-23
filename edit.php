@@ -1,3 +1,36 @@
+<?php
+    session_start();
+
+    if(!isset($_SESSION['login']))
+    {
+        header('location: login.php');
+    }
+
+    // connect to DB
+    $dbhost="localhost";
+    $dbuser="root";
+    $dbpass="";
+    $dbname="simpleblog";
+    $connection=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+    if(mysqli_connect_errno()){
+        die("Koneksi ke Database gagal : ".mysqli_connect_errno()
+            ." (". mysqli_connect_errno()." )");
+    }
+
+    $id_post = htmlspecialchars($_GET['ID']);
+    $query = $connection->prepare("SELECT * FROM posting WHERE id = ?");
+    $query->bind_param('i', $id_post);
+    $query->execute();
+
+    $result = $query->get_result();
+    $posting_data = $result->fetch_assoc();
+
+    if($posting_data['author'] != $_SESSION['login']['username'])
+    {
+        header('location: index.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,15 +68,6 @@
 </head>
 <body class="default">
     <?php
-        $dbhost="localhost";
-        $dbuser="root";
-        $dbpass="";
-        $dbname="simpleblog";
-        $connection=mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-        if(mysqli_connect_errno()){
-            die("Koneksi ke Database gagal : ".mysqli_connect_errno()
-                ." (". mysqli_connect_errno()." )");
-        }
         $posting_id=htmlspecialchars($_GET['ID']);
         $query="SELECT * FROM posting WHERE id=$posting_id";
         $query = $connection->prepare("SELECT * FROM posting WHERE id = ?");
@@ -58,6 +82,7 @@
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+        <li><a href="logout.php">Logout</a></li>
         <li><a href="new_post.php">+ Tambah Post</a></li>
     </ul>
 </nav>

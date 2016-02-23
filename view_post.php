@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php
+    session_start();
+
+    if(!isset($_SESSION['login']))
+    {
+        header('location: login.php');
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,6 +69,7 @@
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+        <li><a href="logout.php">Logout</a></li>
         <li><a href="new_post.php">+ Tambah Post</a></li>
     </ul>
 </nav>
@@ -90,11 +98,8 @@
             <div id="contact-area">
                 <form id="comen" method="POST" action="#" onsubmit="return false">
                     <label for="Nama">Nama:</label>
-                    <input type="text" name="Nama" id="Nama">
-        
-                    <label for="Email">Email:</label>
-                    <input type="text" name="Email" id="Email">
-                    
+                    <input type="text" name="Nama" id="Nama" disabled value="<?php echo $_SESSION['login']['username'] ?>">
+
                     <label for="Komentar">Komentar:</label><br>
                     <textarea name="Komentar" rows="20" cols="20" id="Komentar"></textarea>
                     <input type="submit" name="submit" value="Kirim" class="submit-button" onclick="comment(<?php echo $_GET['ID']?>)">
