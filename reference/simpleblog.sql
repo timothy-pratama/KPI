@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2016 at 05:29 PM
+-- Generation Time: Feb 23, 2016 at 06:28 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -74,17 +74,20 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) NOT NULL,
   `authToken` varchar(255) NOT NULL,
   `rememberToken` varchar(255) NOT NULL,
+  `baseSalt` varchar(255) NOT NULL,
+  `loginSalt` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `authToken`, `rememberToken`) VALUES
-(4, 'timmy', '$2y$10$8Z0acASR0VTWPMAtJNKNJOrlEFduYLrZUC35fVn8EP6kNqyjmwBmO', '', '9b82f7ad7d392b8db042a0c3f5af3e96'),
-(5, 'rama', '$2y$10$FiAGejlT6Y5kF0AfjGKM3eMXdkxiS8A/tV8eAQg5gmjcPDEDhKEoW', '', '');
+INSERT INTO `user` (`id`, `username`, `password`, `authToken`, `rememberToken`, `baseSalt`, `loginSalt`) VALUES
+(4, 'timmy', '$2y$10$8Z0acASR0VTWPMAtJNKNJOrlEFduYLrZUC35fVn8EP6kNqyjmwBmO', '', 'e2098251190fb5284201aad2c6d6e98f', '', ''),
+(5, 'rama', '$2y$10$FiAGejlT6Y5kF0AfjGKM3eMXdkxiS8A/tV8eAQg5gmjcPDEDhKEoW', '', '', '', ''),
+(9, 'user', '$2y$10$tOOugjeSdGB0wvl/wamw/uFakKw2RPyvH3s34IHsopPcCZ7SieAEu', '', '', '', '');
 
 --
 -- Constraints for dumped tables

@@ -61,8 +61,8 @@
             }
             echo 'ok';
 
-            session_destroy();
-            session_start();
+            session_unset();
+            session_regenerate_id();
             $_SESSION['login'] = $user;
         }
         else

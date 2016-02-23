@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+$params = session_get_cookie_params();
+setcookie("PHPSESSID", session_id(), 0, $params["path"], $params["domain"], true, true);
+
 if(!isset($_SESSION['login']))
 {
     header("location: login.php");
