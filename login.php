@@ -62,6 +62,7 @@
 	</div>
 </body>
 
+<script type="text/javascript" src="assets/js/sha256.js"></script>
 <script type="text/javascript" src="assets/js/function.js"></script>
 
 <script>

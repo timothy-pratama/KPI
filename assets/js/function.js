@@ -114,6 +114,7 @@ function doLogin()
 	var password = document.getElementById('password').value;
 	var remember = document.getElementById('rememberMe').checked;
 	var csrf_token = document.getElementById('csrf_token').value;
+    var hashed_password = Sha256.hash(password);
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -136,5 +137,5 @@ function doLogin()
 
 	xhttp.open("POST", "processLogin.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("username="+username+"&password="+password+"&rememberMe="+remember+"&csrf_token="+csrf_token);
+	xhttp.send("username="+username+"&password="+hashed_password+"&rememberMe="+remember+"&csrf_token="+csrf_token);
 }

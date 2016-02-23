@@ -44,12 +44,12 @@
         $user = $result->fetch_assoc();
         $hashed_password = $user['password'];
         $user_id = $user['id'];
-        if(password_verify($password, $hashed_password))
+        if($password === $hashed_password)
         {
             if($remember === 'true')
             {
                 $rememberToken = uniqid();
-                $rememberToken = hash('md5',$rememberToken);
+                $rememberToken = hash('sha256',$rememberToken);
 
                 $query = $connection->prepare("UPDATE user SET rememberToken = ? WHERE id = ?");
                 $query->bind_param('si',$rememberToken, $user_id);

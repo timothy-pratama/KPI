@@ -30,13 +30,13 @@
         $user_id = $user['id'];
 
         // create new session
-        session_destroy();
-        session_start();
+        session_unset();
+        session_regenerate_id();
         $_SESSION['login'] = $user;
 
         // create new cookie
         $newRememberToken = uniqid();
-        $hashed_token = hash('md5', $newRememberToken);
+        $hashed_token = hash('sha256', $newRememberToken);
 
         $query = $connection->prepare("UPDATE user SET rememberToken = ? WHERE id = ?");
         $query->bind_param('si', $hashed_token, $user_id);
