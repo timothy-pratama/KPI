@@ -17,6 +17,12 @@
 	}
 ?>
 <?php
+	require_once("uploadPhoto.php");
+	session_start();
+    if(!isset($_SESSION['login'])){
+    	header('location: login.php');
+    	exit();
+    }
 	$dbhost="localhost";
 	$dbuser="root";
 	$dbpass="";
@@ -33,32 +39,36 @@
 		$bulan=convertmonth($bulan);
 		$tahun= htmlspecialchars($_POST["yeardropdown"]);
 		$konten= htmlspecialchars($_POST["Konten"]);
+		$csrf_token=$_POST["csrf_token"];
 		$tanggal = $tahun."-".$bulan."-".$hari;
 		$author = $_SESSION['login']['username'];
-		$gambar = htmlspecialchars($_POST['gambar']);
-
-		echo $tanggal;
-		if(isset($judul) && isset($tanggal) && isset($konten)){
-			$query = $connection->prepare("INSERT INTO posting (judul, tanggal, konten, author, gambar) VALUES (?,?,?,?,?)");
-			$query->bind_param('sssss',$judul, $tanggal, $konten, $author, $gambar);
-			$result = $query->execute();
-			if($result){
-				echo "berhasil";
+		if($_SESSION['csrf_token']!=$csrf_token) exit();
+		$result=uploadPoto();
+		echo 'jablay';
+		if($result[0]){
+			if(isset($judul) && isset($tanggal) && isset($konten) && isset($result[1])){
+				$query = $connection->prepare("INSERT INTO posting (judul, tanggal, konten, author, gambar) VALUES (?,?,?,?,?)");
+				$query->bind_param('sssss',$judul, $tanggal, $konten, $author, $result[1]);
+				$result = $query->execute();
+				if($result){
+					echo "berhasil";
+				}
+				else{
+					die("Database query failed");
+				}
+				header("Location: index.php");
 			}
 			else{
-				die("Database query failed");
+				header("Location: new_post.php");
 			}
-			mysqli_close($connection);
+		}else{
+			echo "result false";
 			header("Location: index.php");
 		}
-		else{
-			header("Location: new_post.php");
-			die();
-		}
-	
 	}
 	else{//Jika belom disubmit
 		header("Location: new_post.php");
-		die();
 	}
+	unset($_SESSION['csrf_token']);
+	mysqli_close($connection);
 ?>

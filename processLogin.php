@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    include ('script/cookie_helper.php');
+    require_once ('script/cookie_helper.php');
 
     $csrf_token = htmlspecialchars($_POST['csrf_token']);
     $username = htmlspecialchars($_POST['username']);
@@ -61,8 +61,8 @@
             }
             echo 'ok';
 
-            session_unset();
-            session_regenerate_id();
+            session_destroy();
+            session_start();
             $_SESSION['login'] = $user;
         }
         else

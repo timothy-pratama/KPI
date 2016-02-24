@@ -15,6 +15,12 @@
 	}
 ?>
 <?php
+	require_once('uploadPhoto.php');
+	session_start();
+	if(!isset($_SESSION['login'])){
+    	header('location: login.php');
+    	exit();
+    }
 	$dbhost="localhost";
 	$dbuser="root";
 	$dbpass="";
@@ -24,6 +30,14 @@
 		die("Koneksi ke Database gagal : ".mysqli_connect_errno()
 			." (". mysqli_connect_errno()." )");
 	}
+	//Check whose post is it
+	$query = $connection->prepare("SELECT author FROM posting WHERE id = ? ");
+	$query->bind_param('i',$posting_id);
+	$result = $query->execute();
+	if($result['author']!=$_SESSION['login']['author']) exit('have no authority'); //ingin mengedit post milik orang lain
+	if($_POST['csrf_token']!=$_SESSION['csrf_token']) exit('token missmatch');
+
+
 	if(isset($_POST["submit"])){
 		$judul=htmlspecialchars($_POST["Judul"]);
 		$hari=htmlspecialchars($_POST["daydropdown"]);
@@ -33,28 +47,20 @@
 		$konten=htmlspecialchars($_POST["Konten"]);
 		$tanggal = $tahun."-".$bulan."-".$hari;
 		$posting_id=htmlspecialchars($_GET['ID']);
-		$gambar = htmlspecialchars($_POST['gambar']);
+		$result=uploadPoto();;
 		if(isset($judul) && isset($tanggal) && isset($konten)){
 			$query = $connection->prepare("UPDATE posting SET tanggal = ?, judul = ?, konten = ?, gambar = ? WHERE id = ?");
-			$query->bind_param('ssssi',$tanggal,$judul, $konten, $gambar, $posting_id);
+			$query->bind_param('ssssi',$tanggal,$judul, $konten, $result[1], $posting_id);
 			$result = $query->execute();
-			if($result){
-				echo "berhasil";
-			}
-			else{
-				die("Database query failed");
-			}
-			mysqli_close($connection);
+			if($result) echo "berhasil";
+			else echo "Database query failed";
 			header("Location: index.php");
 		}
-		else{
-			header("Location: new_post.php");
-			die();
-		}
-	
+		else header("Location: new_post.php");
 	}
 	else{//Jika belom disubmit
 		header("Location: new_post.php");
-		die();
 	}
+	unset($_SESSION['csrf_token']);
+	mysqli_close($connection);
 ?>

@@ -1,9 +1,11 @@
 <?php
+
     session_start();
 
     if(!isset($_SESSION['login']))
     {
         header('location: login.php');
+        exit();
     }
 
     // connect to DB
@@ -24,11 +26,13 @@
 
     $result = $query->get_result();
     $posting_data = $result->fetch_assoc();
-
     if($posting_data['author'] != $_SESSION['login']['username'])
     {
         header('location: index.php');
+        exit();
     }
+    $csrf_token = hash('sha256',uniqid());
+    $_SESSION['csrf_token'] = $csrf_token;
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +101,7 @@
             <h2>Edit POST</h2>
 
             <div id="contact-area">
-                <form id="formPost" method="post" action="processEdit.php?ID=<?php echo $posting_id ?>">
+                <form enctype="multipart/form-data" id="formPost" method="post" action="processEdit.php?ID=<?php echo $posting_id ?>">
                     <label for="Judul">Judul: </label>
                     <input type="text" name="Judul" id="Judul" value="<?php echo $row['judul'] ?>">
 
@@ -110,9 +114,11 @@
                     </select> 
                     <br><br>
                     <label for="gambar">Gambar:</label>
-                    <input type="file" accept="image/*" id="gambar" name="gambar" required>
+                    <!-- <img src="<?php echo $row['gambar'] ?>" alt="Some Image" style="width:400px;height:300px;"> -->
+                    <input type="file" accept="image/*" id="gambar" name="gambar"></br>
                     <label for="Konten">Konten:</label><br>
                     <textarea name="Konten" rows="20" cols="20" id="Konten"><?php echo $row['konten'] ?></textarea>
+                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>" />
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
                     <br>
                 </form>

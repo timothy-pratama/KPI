@@ -1,7 +1,7 @@
  <?php
 	session_start();
 
- 	include ('script/tanggal_indonesia.php');
+ 	require_once ('script/tanggal_indonesia.php');
 
 	$dbhost="localhost";
     $dbuser="root";

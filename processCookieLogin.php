@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    include ('script/cookie_helper.php');
+    require_once ('script/cookie_helper.php');
 
     $rememberToken = htmlspecialchars($_COOKIE['rememberToken']);
 
