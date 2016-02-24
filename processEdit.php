@@ -30,13 +30,18 @@
 		die("Koneksi ke Database gagal : ".mysqli_connect_errno()
 			." (". mysqli_connect_errno()." )");
 	}
-	//Check whose post is it
-	$query = $connection->prepare("SELECT author FROM posting WHERE id = ? ");
-	$query->bind_param('i',$posting_id);
-	$result = $query->execute();
-	if($result['author']!=$_SESSION['login']['author']) exit('have no authority'); //ingin mengedit post milik orang lain
-	if($_POST['csrf_token']!=$_SESSION['csrf_token']) exit('token missmatch');
 
+	//Check whose post is it
+    $posting_id=htmlspecialchars($_GET['ID']);
+
+	$query = $connection->prepare("SELECT * FROM posting WHERE id = ? ");
+	$query->bind_param('i',$posting_id);
+	$query->execute();
+	$results = $query->get_result();
+    $result = $results->fetch_assoc();
+
+	if($result['author']!=$_SESSION['login']['username']) exit('have no authority'); //ingin mengedit post milik orang lain
+	if($_POST['csrf_token']!=$_SESSION['csrf_token']) exit('token missmatch');
 
 	if(isset($_POST["submit"])){
 		$judul=htmlspecialchars($_POST["Judul"]);
@@ -46,8 +51,7 @@
 		$tahun=htmlspecialchars($_POST["yeardropdown"]);
 		$konten=htmlspecialchars($_POST["Konten"]);
 		$tanggal = $tahun."-".$bulan."-".$hari;
-		$posting_id=htmlspecialchars($_GET['ID']);
-		$result=uploadPoto();;
+		$result=uploadPhoto();
 		if(isset($judul) && isset($tanggal) && isset($konten)){
 			$query = $connection->prepare("UPDATE posting SET tanggal = ?, judul = ?, konten = ?, gambar = ? WHERE id = ?");
 			$query->bind_param('ssssi',$tanggal,$judul, $konten, $result[1], $posting_id);

@@ -1,5 +1,5 @@
 <?php
-    function uploadPoto(){
+    function uploadPhoto(){
         $target_dir = "uploads/";
         $target_file = $target_dir .time(). basename($_FILES["gambar"]["name"]);
         $uploadOk = 1;
@@ -38,7 +38,7 @@
         } else {
             echo $uploadOk;
             if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
-                echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                echo "The file ". basename( $_FILES["gambar"]["name"]). " has been uploaded.";
             } else {
                 echo "Sorry, there was an error uploading your file.";
                 $uploadOk=0;

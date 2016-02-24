@@ -43,7 +43,7 @@
 		$tanggal = $tahun."-".$bulan."-".$hari;
 		$author = $_SESSION['login']['username'];
 		if($_SESSION['csrf_token']!=$csrf_token) exit();
-		$result=uploadPoto();
+		$result=uploadPhoto();
 		echo 'jablay';
 		if($result[0]){
 			if(isset($judul) && isset($tanggal) && isset($konten) && isset($result[1])){

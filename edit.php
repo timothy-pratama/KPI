@@ -31,6 +31,7 @@
         header('location: index.php');
         exit();
     }
+
     $csrf_token = hash('sha256',uniqid());
     $_SESSION['csrf_token'] = $csrf_token;
 ?>

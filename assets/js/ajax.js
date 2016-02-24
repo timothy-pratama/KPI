@@ -1,22 +1,8 @@
-function validateEmail(email) { 
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-   	var bool=re.test(email);
-   	if(bool===false){
-   		document.getElementById("errorEmail").innerHTML="Email tidak valid";
-   		return false;
-   	}
-   	else{
-   		document.getElementById("errorEmail").innerHTML="";
-   		return true;
-   	}
-} 
-
 function comment(ID)
 {
 	var nama=document.getElementById("Nama").value;
-	var email=document.getElementById("Email").value;
 	var komen=document.getElementById("Komentar").value;
-	if(validate_new_comment() && validateEmail(email))
+	if(validate_new_comment())
 	{
 		var xmlhttp;
 		if (window.XMLHttpRequest)
@@ -67,10 +53,9 @@ function show_comment(ID){
 
 function validate_new_comment(){
 		var nama=document.getElementById("Nama").value;
-		var email=document.getElementById("Email").value;
 		var komen=document.getElementById("Komentar").value;
 		var errorMessage=document.getElementById("error");
-		if(nama == "" || email == "" || komen == ""){
+		if(nama == "" || komen == ""){
 			errorMessage.innerHTML="Ada data yang belum diisi";
 			return false;
 		}
