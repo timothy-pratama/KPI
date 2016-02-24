@@ -10,6 +10,9 @@ if(!isset($_SESSION['login']))
     exit();
 }
 
+$csrf_token = hash('sha256', uniqid());
+$_SESSION['csrf_token'] = $csrf_token;
+
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +93,7 @@ if(!isset($_SESSION['login']))
                   </div>
                   <p>".$result['konten']."</p>
                   <p style='margin-left: 35%;'>
-                    <a href='edit.php?ID=".$result['id']."'>Edit</a> | <a href='#' onclick='ConfirmDelete(".$result['id'].")'>Hapus</a>
+                    <a href='edit.php?ID=".$result['id']."'>Edit</a> | <a href='#' onclick='ConfirmDelete(".$result['id'].",\"".$csrf_token."\")'>Hapus</a>
                   </p>
                 </li>
                 ";

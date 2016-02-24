@@ -37,10 +37,31 @@ function validate_new_post(){
 	}
 }
 
-function ConfirmDelete(ID)
+function ConfirmDelete(ID, csrf_token)
 {
-    if (confirm("Delete Post?"))
-         location.href='hapus.php?ID='+ID;
+    if (confirm("Delete Post?")) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var responseText = xhttp.responseText;
+                if(responseText === "ok")
+                {
+                    location.reload();
+                }
+                else if (responseText === "csrf_token_mismatch")
+                {
+                    alert('csrf token mismatch');
+                }
+                else
+                {
+                    alert('Unauthorized Delete Post');
+                }
+            }
+        };
+        xhttp.open("POST", "hapus.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("post_id="+ID+"&csrf_token="+csrf_token);
+    }
 }
 
 var monthtext=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
