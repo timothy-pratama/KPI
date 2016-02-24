@@ -44,7 +44,6 @@
 		$author = $_SESSION['login']['username'];
 		if($_SESSION['csrf_token']!=$csrf_token) exit();
 		$result=uploadPhoto();
-		echo 'jablay';
 		if($result[0]){
 			if(isset($judul) && isset($tanggal) && isset($konten) && isset($result[1])){
 				$query = $connection->prepare("INSERT INTO posting (judul, tanggal, konten, author, gambar) VALUES (?,?,?,?,?)");
