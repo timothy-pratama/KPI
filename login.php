@@ -1,5 +1,9 @@
 <?php
 	session_start();
+
+	include ('simple-php-captcha.php');
+    $_SESSION['captcha'] = simple_php_captcha();
+
 	if(isset($_SESSION['login']))header('location: index.php');
 	else if(isset($_COOKIE['rememberToken'])) header('location: processCookieLogin.php');
 	else{
@@ -30,9 +34,6 @@
 
 <body>
 	<div class="container">
-		<div class="top">
-			<h1 id="title" class="hidden"><span id="logo"><span>Simple Blog</span></span></h1>
-		</div>
 		<div class="login-box animated fadeInUp">
 			<div class="box-header">
 				<h2>Log In</h2>
@@ -46,6 +47,12 @@
 				<br/>
 				<input type="password" id="password" name="password" required>
 				<br/>
+                <label for="captcha">Captcha</label>
+                <br/>
+                <input type="text" id="captcha" name="captcha" required>
+                <br/>
+                <img src="<?php echo $_SESSION['captcha']['image_src'] ?>">
+                <br/>
 				<button type="submit" onclick="doLogin()">Sign In</button>
 				<br/>
 				<br/>

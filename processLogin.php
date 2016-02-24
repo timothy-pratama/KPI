@@ -7,11 +7,17 @@
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $remember = htmlspecialchars($_POST['rememberMe']);
+    $captcha = htmlspecialchars($_POST['captcha']);
 
     if($csrf_token != $_SESSION['csrf_token'])
     {
         echo 'csrf_token_mismatch';
         exit();
+    }
+
+    if($captcha != $_SESSION['captcha']['code'])
+    {
+        exit('wrong_captcha');
     }
 
     // MySQL config
