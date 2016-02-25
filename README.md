@@ -13,7 +13,7 @@ git clone http://gitlab.informatika.org/if4033/SimpleBlogRT.git
 ``` 
 ./build.sh
 ``` 
-- Kemudian buka [https://localhost] untuk mengakses simple secure blog.
+- Kemudian buka <https://localhost> untuk mengakses simple secure blog.
 Pada saat sudah selesai, execute script `stop.sh`</li>
 ``` 
 ./script.sh
