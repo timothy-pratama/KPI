@@ -8,7 +8,7 @@
 	else if(isset($_COOKIE['rememberToken'])) header('location: processCookieLogin.php');
 	else{
 		$params = session_get_cookie_params();
-		setcookie("PHPSESSID", session_id(), 0, $params["path"], $params["domain"], false, true);
+		setcookie("PHPSESSID", session_id(), 0, $params["path"], $params["domain"], true, true);
 
 		$csrf_token = hash('sha256',uniqid());
 		$_SESSION['csrf_token'] = $csrf_token;

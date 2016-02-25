@@ -1,5 +1,5 @@
 FROM ubuntu:trusty
-MAINTAINER Fernando Mayo <fernando@tutum.co>, Feng Honglin <hfeng@tutum.co>
+MAINTAINER Timothy Pratama (13512032), Ramandika Pranamulia (13512078)
 
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -28,6 +28,7 @@ RUN chmod 755 /*.sh
 
 # config to enable .htaccess
 ADD apache_default /etc/apache2/sites-available/000-default.conf
+RUN a2enmod ssl
 RUN a2enmod rewrite
 
 # Configure /app folder with sample app
@@ -41,5 +42,8 @@ ENV PHP_POST_MAX_SIZE 10M
 # Add volumes for MySQL 
 VOLUME  ["/etc/mysql", "/var/lib/mysql" ]
 
-EXPOSE 80 3306 443
+# chmod 777 to uploads folder
+RUN chown www-data /var/www/html/uploads
+
+EXPOSE 443 80
 CMD ["/run.sh"]
