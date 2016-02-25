@@ -42,7 +42,7 @@
 		$csrf_token=$_POST["csrf_token"];
 		$tanggal = $tahun."-".$bulan."-".$hari;
 		$author = $_SESSION['login']['username'];
-		if($_SESSION['csrf_token']!=$csrf_token) exit();
+		if($_SESSION['csrf_token']!=$csrf_token){ echo 'token missmatch';exit();}
 		$result=uploadPhoto();
 		if($result[0]){
 			if(isset($judul) && isset($tanggal) && isset($konten) && isset($result[1])){
@@ -68,6 +68,6 @@
 	else{//Jika belom disubmit
 		header("Location: new_post.php");
 	}
-	unset($_SESSION['csrf_token']);
+    $_SESSION['csrf_token'] = hash('sha256',uniqid());
 	mysqli_close($connection);
 ?>

@@ -53,8 +53,13 @@
 		$tanggal = $tahun."-".$bulan."-".$hari;
 		$result=uploadPhoto();
 		if(isset($judul) && isset($tanggal) && isset($konten)){
-			$query = $connection->prepare("UPDATE posting SET tanggal = ?, judul = ?, konten = ?, gambar = ? WHERE id = ?");
-			$query->bind_param('ssssi',$tanggal,$judul, $konten, $result[1], $posting_id);
+			if(!$result[0]){
+				$query = $connection->prepare("UPDATE posting SET tanggal = ?, judul = ?, konten = ? WHERE id = ?");
+				$query->bind_param('sssi',$tanggal,$judul, $konten, $posting_id);		
+			}else{
+				$query = $connection->prepare("UPDATE posting SET tanggal = ?, judul = ?, konten = ?, gambar = ? WHERE id = ?");
+				$query->bind_param('ssssi',$tanggal,$judul, $konten, $result[1], $posting_id);				
+			}
 			$result = $query->execute();
 			if($result) echo "berhasil";
 			else echo "Database query failed";
@@ -65,6 +70,6 @@
 	else{//Jika belom disubmit
 		header("Location: new_post.php");
 	}
-	unset($_SESSION['csrf_token']);
+	$_SESSION['csrf_token'] = hash('sha256',uniqid());
 	mysqli_close($connection);
 ?>
