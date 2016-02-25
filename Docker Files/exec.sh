@@ -1,0 +1,1 @@
+sudo docker exec -i -t kpi bash
