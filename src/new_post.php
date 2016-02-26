@@ -66,16 +66,16 @@
             <div id="contact-area">
                 <form id="formPost" method="post" action="processPost.php" enctype="multipart/form-data">
                     <label for="Judul">Judul:</label>
-                    <input type="text" name="Judul" id="Judul">
+                    <input type="text" name="Judul" id="Judul" required>
                     <label for="Tanggal">Tanggal:</label>
                     <select id="daydropdown" name="daydropdown"></select>
                     <select id="monthdropdown" name="monthdropdown"></select>
                     <select id="yeardropdown" name="yeardropdown"></select>
                     <br><br>
                     <label for="gambar">Gambar:</label>
-                        <input type="file" accept="image/*" name="gambar" id="gambar">
+                        <input type="file" accept="image/*" name="gambar" id="gambar" required>
                     <label for="Konten">Konten:</label><br>
-                    <textarea name="Konten" rows="20" cols="20" id="Konten"></textarea>
+                    <textarea name="Konten" rows="20" cols="20" id="Konten" required></textarea>
                     <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>" />
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
                     <br>

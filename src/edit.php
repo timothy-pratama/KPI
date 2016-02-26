@@ -104,7 +104,7 @@
             <div id="contact-area">
                 <form enctype="multipart/form-data" id="formPost" method="post" action="processEdit.php?ID=<?php echo $posting_id ?>">
                     <label for="Judul">Judul: </label>
-                    <input type="text" name="Judul" id="Judul" value="<?php echo $row['judul'] ?>">
+                    <input type="text" name="Judul" id="Judul" value="<?php echo $row['judul'] ?>" required>
 
                     <label for="Tanggal">Tanggal:</label>
                     <select id="daydropdown" name="daydropdown">
@@ -116,9 +116,9 @@
                     <br><br>
                     <label for="gambar">Gambar:</label>
                     <!-- <img src="<?php echo $row['gambar'] ?>" alt="Some Image" style="width:400px;height:300px;"> -->
-                    <input type="file" accept="image/*" id="gambar" name="gambar"></br>
+                    <input type="file" accept="image/*" id="gambar" name="gambar" required></br>
                     <label for="Konten">Konten:</label><br>
-                    <textarea name="Konten" rows="20" cols="20" id="Konten"><?php echo $row['konten'] ?></textarea>
+                    <textarea name="Konten" rows="20" cols="20" id="Konten" required><?php echo $row['konten'] ?></textarea>
                     <input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>" />
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
                     <br>
