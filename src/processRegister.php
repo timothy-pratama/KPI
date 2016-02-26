@@ -4,11 +4,17 @@
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $csrf_token = htmlspecialchars($_POST['csrf_token']);
+    $base_salt = htmlspecialchars($_POST['session_id']);
 
     if($csrf_token != $_SESSION['csrf_token'])
     {
         echo('csrf_token mismatch');
         exit();
+    }
+
+    if($base_salt != $_SESSION['base_salt'])
+    {
+        exit('base salt modified!');
     }
 
     // MySQL config
@@ -34,8 +40,8 @@
 
     if($result->num_rows === 0)
     {
-        $insertQuery = $connection->prepare("INSERT INTO user (username, password) VALUES (?, ?)");
-        $insertQuery->bind_param('ss', $username, $password);
+        $insertQuery = $connection->prepare("INSERT INTO user (username, password, baseSalt) VALUES (?, ?, ?)");
+        $insertQuery->bind_param('sss', $username, $password, $base_salt);
         $insertQuery->execute();
 
         $connection->close();

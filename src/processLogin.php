@@ -8,6 +8,7 @@
     $password = htmlspecialchars($_POST['password']);
     $remember = htmlspecialchars($_POST['rememberMe']);
     $captcha = htmlspecialchars($_POST['captcha']);
+    $login_salt = htmlspecialchars($_POST['session_id']);
 
     if($csrf_token != $_SESSION['csrf_token'])
     {
@@ -18,6 +19,11 @@
     if($captcha != $_SESSION['captcha']['code'])
     {
         exit('wrong_captcha');
+    }
+
+    if($login_salt != $_SESSION['login_salt'])
+    {
+        exit('login salt changed!');
     }
 
     // MySQL config
@@ -49,8 +55,9 @@
     {
         $user = $result->fetch_assoc();
         $hashed_password = $user['password'];
+        $advanced_hashed_password = hash('sha256', $login_salt . $hashed_password . $login_salt);
         $user_id = $user['id'];
-        if($password === $hashed_password)
+        if($password === $advanced_hashed_password)
         {
             if($remember === 'true')
             {
@@ -67,8 +74,10 @@
             }
             echo 'ok';
 
+            session_unset();
             session_destroy();
             session_start();
+            session_regenerate_id();
             $_SESSION['login'] = $user;
         }
         else

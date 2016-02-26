@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2016 at 03:53 PM
+-- Generation Time: Feb 26, 2016 at 01:56 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `posting` (
   `author` varchar(255) NOT NULL,
   `gambar` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `posting`
@@ -81,20 +81,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) NOT NULL,
   `authToken` varchar(255) NOT NULL,
   `rememberToken` varchar(255) NOT NULL,
+  `baseSalt` varchar(255) NOT NULL,
+  `loginSalt` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `authToken`, `rememberToken`) VALUES
-(11, 'user', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', '', ''),
-(12, 'timmy', 'fa39223abacabf18c7732bcee269d084895286162186ed574ec169e47c5cb3b9', '', '38663ae0a58f8e942014c4f1233d310e0571e6396faac9cd1968b686e65ef145'),
-(13, 'rama', '65ec920cb42d205741f85b4d7aeb8118ce39a6f5609311006ce0196bc9bd2483', '', ''),
-(14, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '', ''),
-(15, 'ichwan', '79d1dc29d89e51ccc7a00999f6740a0ef38c18b2c29fa74976a598408d451c42', '', '');
+INSERT INTO `user` (`id`, `username`, `password`, `authToken`, `rememberToken`, `baseSalt`, `loginSalt`) VALUES
+(4, 'timmy', '4918073c46b7e774ac824716f04331f63aacc236eed2f428935314ef19804ae6', '', '26000cf1731d6b96a859596a6f93ec01c4194a300afbea761833987260f0dbc3', 'ea09be8e4a5a3f5e04a786066768068d78993994d394962e4f99642c326c06d5', ''),
+(5, 'rama', '5e011ee07cfb52c4bbde0216d4a8f96a31a5626d52488af4970031e587a1ab71', '', '', 'c577f2aadf008fc733b71ee25f62a4bc723ef415ae425970008d416ee2ec9b46', '');
 
 --
 -- Constraints for dumped tables

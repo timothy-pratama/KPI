@@ -3,6 +3,9 @@
 
     $csrf_token = hash('sha256',uniqid());
     $_SESSION['csrf_token'] = $csrf_token;
+
+    $base_salt = hash('sha256', uniqid());
+    $_SESSION['base_salt'] = $base_salt;
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +48,7 @@
             <br/>
             <input type="password" id="confirmPassword" name="confirmPassword" required>
             <br/>
-            <button type="submit" onclick="validatePasswordAndRegister()">Register</button>
+            <button type="submit" onclick="validatePasswordAndRegister('<?php echo $base_salt ?>')">Register</button>
             <br/>
             <input type="hidden" id="csrftoken" name="csrftoken" value="<?php echo $csrf_token?>">
         </form>

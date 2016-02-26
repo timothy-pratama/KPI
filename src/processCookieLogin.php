@@ -31,6 +31,8 @@
 
         // create new session
         session_unset();
+        session_destroy();
+        session_start();
         session_regenerate_id();
         $_SESSION['login'] = $user;
 

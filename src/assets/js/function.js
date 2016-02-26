@@ -90,13 +90,19 @@ window.onload=function(){
 	populatedropdown("daydropdown", "monthdropdown", "yeardropdown");
 }
 
-function validatePasswordAndRegister()
+function validatePasswordAndRegister(base_salt)
 {
 	var username = document.getElementById('username').value;
 	var password = document.getElementById('password').value;
 	var confirmPassword = document.getElementById('confirmPassword').value;
 	var csrf_token = document.getElementById('csrftoken').value;
-    var hashed_password = Sha256.hash(password);
+    var hashed_password = Sha256.hash(base_salt + password + base_salt);
+
+	if(username === "" || password === "" || confirmPassword === "")
+	{
+		return;
+	}
+
 	if(password === confirmPassword)
 	{
 		var xhttp = new XMLHttpRequest();
@@ -112,6 +118,10 @@ function validatePasswordAndRegister()
 				{
 					alert('username has been used');
 				}
+				else if(responseText === "base salt modified!")
+				{
+					alert('base salt modified!');
+				}
 				else
 				{
 					alert('csrf_token mismatch.');
@@ -120,7 +130,7 @@ function validatePasswordAndRegister()
 		};
 		xhttp.open("POST", "processRegister.php?", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("username="+username+"&password="+hashed_password+"&csrf_token="+csrf_token);
+		xhttp.send("username="+username+"&password="+hashed_password+"&csrf_token="+csrf_token+"&session_id="+base_salt);
 	}
 	else
 	{
@@ -129,19 +139,21 @@ function validatePasswordAndRegister()
 	}
 }
 
-function doLogin()
+function doLoginAdvance(base_salt)
 {
 	var username = document.getElementById('username').value;
 	var password = document.getElementById('password').value;
 	var remember = document.getElementById('rememberMe').checked;
 	var csrf_token = document.getElementById('csrf_token').value;
-    var captcha = document.getElementById('captcha').value;
-    var hashed_password = Sha256.hash(password);
+	var captcha = document.getElementById('captcha').value;
+	var login_salt = document.getElementById('login_salt').value;
+	var hashed_password = Sha256.hash(base_salt + password + base_salt);
+	var advanced_hashed_password = Sha256.hash(login_salt + hashed_password + login_salt);
 
-    if(username == "" || password == "" || captcha == "")
-    {
-        return;
-    }
+	if(username == "" || password == "" || captcha == "")
+	{
+		return;
+	}
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -155,10 +167,14 @@ function doLogin()
 			{
 				alert('csrf token mismatch!');
 			}
-            else if(responseText === "wrong_captcha")
-            {
-                alert('wrong captcha!');
-            }
+			else if(responseText === "wrong_captcha")
+			{
+				alert('wrong captcha!');
+			}
+			else if(responseText === "login salt changed!")
+			{
+				alert("login salt changed!");
+			}
 			else
 			{
 				alert('incorrect username / password!');
@@ -168,5 +184,28 @@ function doLogin()
 
 	xhttp.open("POST", "processLogin.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("username="+username+"&password="+hashed_password+"&rememberMe="+remember+"&csrf_token="+csrf_token+"&captcha="+captcha);
+	xhttp.send("username="+username+"&password="+advanced_hashed_password+"&rememberMe="+remember+"&csrf_token="+csrf_token+"&captcha="+captcha+"&session_id="+login_salt);
+}
+
+function doLogin()
+{
+	var username = document.getElementById('username').value;
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			var responseText = xhttp.responseText;
+			if(responseText === "fail")
+			{
+				alert('incorrect username / password!');
+			}
+			else
+			{
+				doLoginAdvance(responseText);
+			}
+		}
+	};
+	xhttp.open("POST", "retrieveSalt.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("username="+username);
 }
