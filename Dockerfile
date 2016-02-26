@@ -7,9 +7,6 @@ RUN apt-get update && \
   apt-get -y install supervisor git apache2 libapache2-mod-php5 mysql-server php5-mysqlnd pwgen php-apc php5-mcrypt php5-gd && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Set up mysqlini
-# RUN echo "extension=mysqli.so" >> /etc/php5/apache2/php.ini 
-
 # Add image configuration and scripts
 ADD start-apache2.sh /start-apache2.sh
 ADD start-mysqld.sh /start-mysqld.sh
@@ -28,7 +25,6 @@ RUN chmod 755 /*.sh
 
 # config to enable .htaccess
 ADD apache_default /etc/apache2/sites-available/000-default.conf
-RUN a2enmod ssl
 RUN a2enmod rewrite
 
 # Configure /app folder with sample app
@@ -45,5 +41,5 @@ VOLUME  ["/etc/mysql", "/var/lib/mysql" ]
 # chmod 777 to uploads folder
 RUN chown www-data /var/www/html/uploads
 
-EXPOSE 443 80
+EXPOSE 80
 CMD ["/run.sh"]

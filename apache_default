@@ -1,9 +1,4 @@
 <VirtualHost *:80>
-   ServerName localhost
-   Redirect permanent / https://localhost/
-</VirtualHost>
-
-<VirtualHost *:443>
         ServerAdmin webmaster@localhost
 
         DocumentRoot /var/www/html
@@ -35,13 +30,9 @@
 
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-	#
-	# Set HTTPS environment variable if we came in over secure
-	#  channel.
-	SetEnvIf x-forwarded-proto https HTTPS=on
-
-        SSLEngine on
-        SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
-        SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+    #
+    # Set HTTPS environment variable if we came in over secure
+    #  channel.
+    SetEnvIf x-forwarded-proto https HTTPS=on
 
 </VirtualHost>
